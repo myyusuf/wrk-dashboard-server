@@ -1,0 +1,22 @@
+exports.netProfitResult = {
+    "totalKontrakDihadapi": {},
+    "sisaKontrakDihadapi": {},
+    "pesananBaruKontrakDihadapi": {},
+    "totalPenjualan": {},
+    "penjualanLama": {},
+    "penjualanBaru": {},
+    "totalLabaKotor": {},
+    "labaKotorLama": {},
+    "labaKotorBaru": {},
+    "totalPphFinal": {},
+    "pphFinalLama": {},
+    "pphFinalBaru": {},
+    "totalLabaKotorStlhPphFinal": {},
+    "labaKotorStlhPphFinalLama": {},
+    "labaKotorStlhPphFinalBaru": {},
+    "efisiensiInefisiensilabaKotorStlhPphFinal": {},
+    "biayaUsaha": {},
+    "labaUsaha": {},
+    "labaUsahaLspLabaRugiLain": {},
+    "labaSebelumPajak": {}
+};

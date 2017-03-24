@@ -1,7 +1,7 @@
 var summaryData = require('./handlers/summarydata.js');
 var summaryPdf = require('./handlers/summarypdf.js');
 
-var drillDownData = require('./handlers/drilldowndata.js');
+var drillDownData = require('./handlers/drilldowndata_new.js');
 
 var projectData = require('./handlers/projectdata.js');
 
