@@ -136,7 +136,7 @@ module.exports = function(app, passport, db) {
     drillDownData.kontrakDihadapi(req, res, db);
   });
 
-  app.get('/drilldowndata/project-info-dd/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
+  app.get('/drilldowndata/project-info-dd/:projectType/:year/:month/:projectStatus', passport.authenticate('basic', { session: false }), function(req, res) {
     drillDownData.projectInfoDD(req, res, db);
   });
 
