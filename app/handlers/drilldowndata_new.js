@@ -81,12 +81,13 @@ exports.projectInfoDDDetails = function(req, res, db) {
 
 exports.qmslDD = function(req, res, db) {
 
+  var _projectId = req.params.projectId;
   var _year = req.params.year;
   var _month = req.params.month;
 
-  var query = "SELECT * FROM db_mobile_qmsl WHERE  tahun=? and bulan=?";
+  var query = "SELECT * FROM db_mobile_qmsl WHERE  id_proyek=? AND tahun=? AND bulan=? ";
   db.query(
-    query, [_year, _month],
+    query, [_projectId, _year, _month],
     function(err, rows) {
       if (err) throw err;
 
@@ -105,12 +106,13 @@ exports.qmslDD = function(req, res, db) {
 
 exports.sheLevelDD = function(req, res, db) {
 
+  var _projectId = req.params.projectId;
   var _year = req.params.year;
   var _month = req.params.month;
 
-  var query = "SELECT * FROM db_mobile_she_level WHERE tahun=? and bulan=?";
+  var query = "SELECT * FROM db_mobile_she_level WHERE id_proyek=? AND tahun=? AND bulan=? ";
   db.query(
-    query, [_year, _month],
+    query, [_projectId, _year, _month],
     function(err, rows) {
       if (err) throw err;
 
@@ -129,12 +131,13 @@ exports.sheLevelDD = function(req, res, db) {
 
 exports.limaRDD = function(req, res, db) {
 
+  var _projectId = req.params.projectId;
   var _year = req.params.year;
   var _month = req.params.month;
 
-  var query = "SELECT * FROM db_mobile_lima_r WHERE tahun=? and bulan=?";
+  var query = "SELECT * FROM db_mobile_lima_r WHERE id_proyek=? AND tahun=? AND bulan=? ";
   db.query(
-    query, [_year, _month],
+    query, [_projectId, _year, _month],
     function(err, rows) {
       if (err) throw err;
 

@@ -144,15 +144,15 @@ module.exports = function(app, passport, db) {
     drillDownData.projectInfoDDDetails(req, res, db);
   });
 
-  app.get('/drilldowndata/qmsl-dd/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
+  app.get('/drilldowndata/qmsl-dd/:projectId/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
     drillDownData.qmslDD(req, res, db);
   });
 
-  app.get('/drilldowndata/she-level-dd/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
+  app.get('/drilldowndata/she-level-dd/:projectId/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
     drillDownData.sheLevelDD(req, res, db);
   });
 
-  app.get('/drilldowndata/lima-r-dd/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
+  app.get('/drilldowndata/lima-r-dd/:projectId/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
     drillDownData.limaRDD(req, res, db);
   });
 
