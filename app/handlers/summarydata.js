@@ -57,6 +57,100 @@ exports.netProfit = function(req, res, db) {
   );
 };
 
+exports.newProjectInfo = function(req, res, db) {
+
+  var _year = req.params.year;
+  var _month = req.params.month;
+
+  var _prevYear = parseInt(_year);
+  var _prevMonth = parseInt(_month) - 1;
+
+  if (_prevMonth == 0) {
+    _prevMonth = 12;
+    _prevYear = _prevYear - 1;
+  }
+
+  var _result = {
+    month: _month,
+    year: _year,
+    projectCount: 0,
+    projectOMCount: 0,
+    lateProjectCount: 0,
+    lateProjectOMCount: 0,
+    prevLateProjectCount: 0,
+    prevLateProjectOMCount: 0
+  }
+
+  var query = "SELECT COUNT(1) AS lateProjectCount, project_type, status FROM db_mobile_info_proyek WHERE tahun=? and bulan=? " +
+  "GROUP BY project_type, status ORDER BY project_type ";
+  var _projectCount = 0;
+  var _projectOMCount = 0;
+  var _lateProjectCount = 0;
+  var _lateProjectOMCount = 0;
+  var _prevLateProjectCount = 0;
+  var _prevLateProjectOMCount = 0;
+
+  db.query(
+    query, [_year, _month],
+    function(err, rows) {
+      if (err) throw err;
+
+      if (rows.length > 0) {
+        _result.month = _month;
+        _result.year = _year;
+      }
+
+      for(var i=0; i<rows.length; i++){
+        if(rows[0].project_type == 1){
+          _projectCount += 1;
+          if(rows[0].status == 2){
+            _lateProjectCount += 1;
+          }
+        }else{
+          _projectOMCount += 1;
+          if(rows[0].status == 2){
+            _lateProjectOMCount += 1;
+          }
+        }
+      }
+
+      db.query(
+        query, [_prevYear, _prevMonth],
+        function(err, rows) {
+          if (err) throw err;
+
+          for(var i=0; i<rows.length; i++){
+            if(rows[0].project_type == 1){
+              if(rows[0].status == 2){
+                _prevLateProjectCount += 1;
+              }
+            }else{
+              if(rows[0].status == 2){
+                _prevLateProjectOMCount += 1;
+              }
+            }
+          }
+
+          _result.projectCount = _projectCount;
+          _result.projectOMCount = _projectOMCount;
+
+          _result.lateProjectCount = _lateProjectCount;
+          _result.lateProjectOMCount = _lateProjectOMCount;
+
+          _result.prevLateProjectCount = _prevLateProjectCount;
+          _result.prevLateProjectOMCount = _prevLateProjectOMCount;
+
+          console.log(JSON.stringify(_result));
+
+          res.json(_result);
+
+        }
+      );
+
+    }
+  );
+};
+
 exports.projectInfo = function(req, res, db) {
 
   var _year = req.params.year;
@@ -282,31 +376,33 @@ exports.riskInfo = function(req, res, db) {
 };
 
 var _getMonth = function(month) {
-  if (month === '1' || month === '01') {
-    return 'Jan'
-  } else if (month === '2' || month === '02') {
-    return 'Feb'
-  } else if (month === '3' || month === '03') {
-    return 'Mar'
-  } else if (month === '4' || month === '04') {
-    return 'Apr'
-  } else if (month === '5' || month === '05') {
-    return 'Mei'
-  } else if (month === '6' || month === '06') {
-    return 'Jun'
-  } else if (month === '7' || month === '07') {
-    return 'Jul'
-  } else if (month === '8' || month === '08') {
-    return 'Ags'
-  } else if (month === '9' || month === '09') {
-    return 'Sep'
-  } else if (month === '10' || month === '10') {
-    return 'Okt'
-  } else if (month === '11' || month === '11') {
-    return 'Nov'
-  } else if (month === '12' || month === '12') {
-    return 'Des'
-  }
+  const MONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', 'Sep', 'Okt', 'Nov', 'Des'];
+  return(MONTH[month-1]);
+  // if (month === '1' || month === '01') {
+  //   return 'Jan'
+  // } else if (month === '2' || month === '02') {
+  //   return 'Feb'
+  // } else if (month === '3' || month === '03') {
+  //   return 'Mar'
+  // } else if (month === '4' || month === '04') {
+  //   return 'Apr'
+  // } else if (month === '5' || month === '05') {
+  //   return 'Mei'
+  // } else if (month === '6' || month === '06') {
+  //   return 'Jun'
+  // } else if (month === '7' || month === '07') {
+  //   return 'Jul'
+  // } else if (month === '8' || month === '08') {
+  //   return 'Ags'
+  // } else if (month === '9' || month === '09') {
+  //   return 'Sep'
+  // } else if (month === '10' || month === '10') {
+  //   return 'Okt'
+  // } else if (month === '11' || month === '11') {
+  //   return 'Nov'
+  // } else if (month === '12' || month === '12') {
+  //   return 'Des'
+  // }
 }
 
 exports.salesChartData = function(req, res, db) {
@@ -314,7 +410,8 @@ exports.salesChartData = function(req, res, db) {
   var _year = req.params.year;
   //    var _month = req.params.month;
 
-  var _divider = 1000000000;
+  // var _divider = 1000000000;
+  var _divider = 1;
 
   var query = "SELECT * FROM omzet_kontrak WHERE tahun=?";
   db.query(
@@ -344,7 +441,8 @@ exports.financialChartData = function(req, res, db) {
   var _year = req.params.year;
   //    var _month = req.params.month;
 
-  var _divider = 1000000000;
+  // var _divider = 1000000000;
+  var _divider = 1;
 
   var query = "SELECT * FROM laporan_keuangan WHERE tahun=?";
   db.query(

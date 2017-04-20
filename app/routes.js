@@ -91,7 +91,7 @@ module.exports = function(app, passport, db) {
   });
 
   app.get('/summarydata/project-info/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
-    summaryData.projectInfo(req, res, db);
+    summaryData.newProjectInfo(req, res, db);
   });
 
   app.get('/summarydata/score-card/:year/:month', passport.authenticate('basic', { session: false }), function(req, res) {
