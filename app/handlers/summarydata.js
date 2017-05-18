@@ -413,7 +413,7 @@ exports.salesChartData = function(req, res, db) {
   // var _divider = 1000000000;
   var _divider = 1;
 
-  var query = "SELECT * FROM omzet_kontrak WHERE tahun=?";
+  var query = 'SELECT * FROM omzet_kontrak WHERE tahun=? ORDER BY bulan';
   db.query(
     query, [_year],
     function(err, rows) {
@@ -444,7 +444,7 @@ exports.financialChartData = function(req, res, db) {
   // var _divider = 1000000000;
   var _divider = 1;
 
-  var query = "SELECT * FROM laporan_keuangan WHERE tahun=?";
+  var query = "SELECT * FROM laporan_keuangan WHERE tahun=? ORDER BY bulan ";
   db.query(
     query, [_year],
     function(err, rows) {
