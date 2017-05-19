@@ -34,10 +34,12 @@ exports.projectInfoDD = function(req, res, db) {
 
   var _year = req.params.year;
   var _month = req.params.month;
+  var _projectType = req.params.projectType === 'KF' ? 1 : 2;
+  var _projectStatus = req.params.projectStatus === 'NORMAL' ? 1 : 2 ;
 
-  var query = "SELECT * FROM db_mobile_info_proyek WHERE  tahun=? and bulan=?";
+  var query = "SELECT * FROM db_mobile_info_proyek WHERE  tahun=? and bulan=? and project_type=? and status=? ";
   db.query(
-    query, [_year, _month],
+    query, [_year, _month, _projectType, _projectStatus],
     function(err, rows) {
       if (err) throw err;
 
