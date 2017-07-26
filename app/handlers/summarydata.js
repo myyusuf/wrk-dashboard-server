@@ -81,8 +81,8 @@ exports.newProjectInfo = function(req, res, db) {
     prevLateProjectOMCount: 0
   }
 
-  var query = "SELECT COUNT(1) AS lateProjectCount, project_type, status FROM db_mobile_info_proyek WHERE tahun=? and bulan=? " +
-  "GROUP BY project_type, status ORDER BY project_type ";
+  var query = "SELECT dmip.project_type, dmip.status FROM db_mobile_info_proyek dmip WHERE tahun=? and bulan=? " +
+  "ORDER BY project_type ";
   var _projectCount = 0;
   var _projectOMCount = 0;
   var _lateProjectCount = 0;
