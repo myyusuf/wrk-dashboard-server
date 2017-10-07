@@ -20,6 +20,41 @@ exports.netProfit = function(req, res, db) {
     prevRkap: 0
   }
 
+  // TODO
+  // labaUsahaLspLabaRugiLain.lsp.riSaatIni
+  // labaUsahaLspLabaRugiLain.lsp.rkap
+
+  var query = "SELECT * FROM tb_net_profit WHERE tahun=? and bulan=?";
+  db.query(
+    query, [_year, _month],
+    function(err, rows) {
+      if (err) throw err;
+      if(rows.length>0){
+        const jsonData = JSON.parse(rows[0].data);
+        _result.month = _month;
+        _result.year = _year;
+        _result.netProfit = jsonData.labaUsahaLspLabaRugiLain.lsp.riSaatIni;
+        _result.rkap = jsonData.labaUsahaLspLabaRugiLain.lsp.rkap;
+      }
+
+      db.query(
+        query, [_prevYear, _prevMonth],
+        function(err, rows) {
+          if (err) throw err;
+          if(rows.length>0){
+            const jsonData = JSON.parse(rows[0].data);
+            _result.prevNetProfit = jsonData.labaUsahaLspLabaRugiLain.lsp.riSaatIni;
+            _result.prevRkap = jsonData.labaUsahaLspLabaRugiLain.lsp.rkap;
+          }
+          res.json(_result);
+        }
+      );
+
+    }
+  );
+
+  //--------------------------------------
+  /*
   var _query = "SELECT * FROM laba_bersih WHERE tahun=? and bulan=?";
 
   db.query(
@@ -55,6 +90,7 @@ exports.netProfit = function(req, res, db) {
 
     }
   );
+  */
 };
 
 exports.newProjectInfo = function(req, res, db) {
